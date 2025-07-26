@@ -6,7 +6,7 @@ import Alert from '../Shared/Alert.jsx'
 import Footer from '../Footer/Footer.jsx'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 
-import LightProjectTimeline from '../LightProjectTimeline/LightProjectTimeline.jsx'
+import Insights from "../Insights/Insights.jsx"
 
 import Terms from '../Terms/Terms.jsx'
 import Contact from '../Contact/Contact.jsx'
@@ -106,14 +106,8 @@ function App() {
               <Terms />
             }/>
             <Route path="/" element={
-              <LightProjectTimeline
-                isMobile={isMobile}
-                APIGateway={APIGateway}
-                onAlert={handleAlert}
-                onError={handleError}
-              />}/>
-            <Route path="/punchlist-timelines" element={
-              <LightProjectTimeline
+              <Insights
+                lightPath={'./datasets/timeseries_light.xlsx'}
                 isMobile={isMobile}
                 APIGateway={APIGateway}
                 onAlert={handleAlert}

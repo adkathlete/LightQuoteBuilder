@@ -182,7 +182,7 @@ const SUFFIX_MAP={
   "9":"th",
 };
 
-function getPercentileFromZScore(zScore){
+export function getPercentileFromZScore(zScore){
   if(Number.isNaN(zScore)){
       return 0
   }
@@ -227,7 +227,7 @@ function getPercentileFromZScore(zScore){
 
 //Simple function to get the value from a percentile, with a corresponding mean and std dev
 //Z = x-u/stdDev --> X = Z*stdDev+u
-function getValueFromPercentile(percentile,mean,stdDev){
+export function getValueFromPercentile(percentile,mean,stdDev){
   //The point here is you need to find the row + col index of the percentage value, so you can multiply the ZValue*stdDev+mean to get the value;
   //The ZValue has two parts -- the base values (#.#) and the '10's place decimal (0.0#);
 
@@ -361,7 +361,7 @@ function getValueFromPercentile(percentile,mean,stdDev){
 }
 
 //Get a plain text label for the given percentile
-function getLabelForPercentile(percentile){
+export function getLabelForPercentile(percentile){
   let percentileLabel;
   let suffix='th';
 
@@ -381,7 +381,7 @@ function getLabelForPercentile(percentile){
 }
 
 //Create an exponential distribution of bin probabilities
-function generateExponentialDistribution(nBins){
+export function generateExponentialDistribution(nBins){
 
 let bins=nBins?nBins:50;
 let base=1.1;
@@ -419,9 +419,4 @@ let answer=Array(bins).fill(base).map((entry,index)=>{let value=entry*Math.pow(g
 console.log({status:"Our Answer", guess:guess, answer:answer, aggregate:answer.reduceRight((agg,cum)=>agg+cum,0)});
 
 return answer;
-
 }
-
-exports.getPercentileFromZScore=getPercentileFromZScore;
-exports.getValueFromPercentile=getValueFromPercentile;
-exports.getLabelForPercentile=getLabelForPercentile;
