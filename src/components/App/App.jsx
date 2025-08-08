@@ -3,14 +3,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 import Alert from '../Shared/Alert.jsx'
-import Footer from '../Footer/Footer.jsx'
-import Sidebar from '../Sidebar/Sidebar.jsx'
-
-import Insights from "../Insights/Insights.jsx"
-
-import Terms from '../Terms/Terms.jsx'
-import Contact from '../Contact/Contact.jsx'
-import Installation from '../Installation/Installation.jsx'
+import LightQuoteBuilder from "../LightQuoteBuilder/LightQuoteBuilder.jsx"
 
 import Foundation from "../Shared/Annimations/Foundation.jsx"
 
@@ -94,22 +87,8 @@ function App() {
             <div className='hidden'/>
           )}
           <Routes>
-            <Route path="/contact" element={
-              <Contact
-                onNewMessage={()=>{}}
-              />
-            }/>
-            <Route path="/installation" element={
-              <Installation/>
-            }/>
-            <Route path="/terms" element={
-              <Terms />
-            }/>
             <Route path="/" element={
-              <Insights
-                lightPath={'./datasets/timeseries_light.xlsx'}
-                isMobile={isMobile}
-                APIGateway={APIGateway}
+              <LightQuoteBuilder
                 onAlert={handleAlert}
                 onError={handleError}
               />}/>
