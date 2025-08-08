@@ -6,21 +6,32 @@ import {
   useLocation
 } from "react-router-dom";
 
+const ENERGY_COLORS = [
+  {id:"0",color:"#0ea5e9", colorString:"blue-400" ,text:"General", emoji:"🎯",active:true, show:true},
+  {id:"1",color:"#8b5cf6", colorString:"indigo-400", text:"Work", emoji:"💻", active:true, show:false},
+  {id:"3",color:"#ec4899", colorString:"pink-400", text:"Emotional Health", emoji:"🧘‍♀️", active:true, show:false},
+  {id:"5",color:"#22c55e", colorString:"yellow-400", text:"Friends", emoji:"🥳", active:true, show:false},
+  {id:"6",color:"#22d3ee", colorString:"red-400", text:"Family", emoji:"🏡", active:true, show:false},
+  {id:"7",color:"#fde047", colorString:"cyan-400", text:"Hobbies", emoji:"🏔", active:true, show:false},
+  {id:"8",color:"#5eead4", colorString:"green-400", text:"School", emoji:"📚", active:true, show:false},
+  {id:"9",color:"#e11d48", colorString:"red-800", text:"Love", emoji:"<3", active:true, show:false},
+];
+
 //Light Project Timeline
 const LightQuoteBuilder=()=>{
 
   const LAYER_IMG_PATHS=[
-    "./public/photos/verkada/layer1.png",
-    "./public/photos/verkada/layer2.png",
-    "./public/photos/verkada/layer3.png",
-    "./public/photos/verkada/layer4.png",
-    "./public/photos/verkada/layer5.png",
-    "./public/photos/verkada/layer6.png",
+    "./photos/verkada/layer1.png",
+    "./photos/verkada/layer2.png",
+    "./photos/verkada/layer3.png",
+    "./photos/verkada/layer4.png",
+    "./photos/verkada/layer5.png",
+    "./photos/verkada/layer6.png",
   ]
 
   const PLATFORM_IMG_PATHS=[
-    "./public/photos/verkada/command.png",
-    "./public/photos/verkada/connect.png",
+    "./photos/verkada/command.png",
+    "./photos/verkada/connect.png",
   ]
 
   const LAYERS=[0,0,0,0,0,0];
@@ -219,6 +230,12 @@ const LightQuoteBuilder=()=>{
             <div className='font-bold text-3xl'>
               {String("Verkada Quote")}
             </div>
+            <div className='flex flex-row items-center justify-center font-bold rounded-full bg-gray-800 text-white px-4 py-2'>
+              {String("ABC Company")}
+            </div>
+            <div className='flex flex-row items-center justify-between text-sm'>
+              {String("Quote ID: 54325262")}
+            </div>
 
             {/*SKU List*/}
             <div className='flex flex-col flex-1 w-full mt-4 px-4 text-lg items-center justify-start shadow-lg rounded-b-lg'>
@@ -227,7 +244,7 @@ const LightQuoteBuilder=()=>{
               </div>
               {[0].map((layer,layerIndex)=>{
                 return(
-                  <div className={`flex flex-row w-full items-center rounded-sm justify-start border-b border-grAY-300 ${layerIndex%2===1?"bg-gray-300":"bg-white"}`}>
+                  <div key={layerIndex} className={`flex flex-row w-full items-center rounded-sm justify-start border-b border-grAY-300 ${layerIndex%2===1?"bg-gray-300":"bg-white"}`}>
                     <div className='w-24 font-bold text-center'>
                       {String("Layer")}
                     </div>
@@ -251,10 +268,10 @@ const LightQuoteBuilder=()=>{
               {layers.map((layer,layerIndex)=>{
                 let shade=activeLayerIndex!==null&&activeLayerIndex!=layerIndex
                 return(
-                  <div className={`flex flex-row w-full h-16 items-center rounded-sm justify-start ${layerIndex%2===1?"bg-gray-300":"bg-white"}`} style={{opacity:shade?"20%":"100%"}}>
+                  <div key={layerIndex} className={`flex flex-row w-full h-14 items-center rounded-sm justify-start ${layerIndex%2===1?"bg-gray-300":"bg-white"}`} style={{opacity:shade?"20%":"100%"}}>
                     <div className='flex flex-col h-12 w-24 items-center justify-center'>
-                      <div className='flex flex-col h-12 w-12 rounded-lg shadow-xl overflow-hidden'>
-                        <img className='flex flex-col h-12 w-12' src={LAYER_IMG_PATHS[layerIndex]}/>
+                      <div className='flex flex-col h-10 w-10 rounded-lg shadow-xl overflow-hidden'>
+                        <img className='flex flex-col h-full w-full' src={LAYER_IMG_PATHS[layerIndex]}/>
                       </div>
                     </div>
                     <div className='font-bold border-l w-28 items-center justify-start text-center'>
@@ -308,10 +325,10 @@ const LightQuoteBuilder=()=>{
               })}
               {[0,0,].map((layer,layerIndex)=>{
                 return(
-                  <div className={`flex flex-row w-full h-16 items-center rounded-sm justify-start ${layerIndex%2===1?"bg-gray-300":"bg-white"}`}>
+                  <div className={`flex flex-row w-full h-14 items-center rounded-sm justify-start ${layerIndex%2===1?"bg-gray-300":"bg-white"}`}>
                     <div className='flex flex-col w-24 items-center justify-center font-bold'>
-                      <div className='flex flex-col h-12 w-12 rounded-lg shadow-xl overflow-hidden'>
-                        <img className='flex flex-col h-12 w-12' src={PLATFORM_IMG_PATHS[layerIndex]}/>
+                      <div className='flex flex-col h-10 w-10 rounded-lg shadow-xl overflow-hidden'>
+                        <img className='flex flex-col h-full w-full' src={PLATFORM_IMG_PATHS[layerIndex]}/>
                       </div>
                     </div>
                     <div className='font-bold border-l w-28 items-center justify-start text-center'>
@@ -339,7 +356,15 @@ const LightQuoteBuilder=()=>{
                 {String("Sub-Total:")}
               </div>
               <div >
-                {String("$"+layers.reduceRight((agg,cum,index)=>agg+COSTS[index]*cum,0))}
+                <LightNumber
+                  value={layers.reduceRight((agg,cum,index)=>agg+COSTS[index]*cum,0)}
+                  config={{
+                    decimals:1,
+                    prefix:"$",
+                    suffix:"",
+                    isTimestamp:false
+                  }}
+                />
               </div>
             </div>
 
@@ -362,7 +387,15 @@ const LightQuoteBuilder=()=>{
                 {String("Total:")}
               </div>
               <div >
-                {String("$"+layers.reduceRight((agg,cum,index)=>agg+COSTS[index]*cum,0)*.8)}
+                <LightNumber
+                  value={layers.reduceRight((agg,cum,index)=>agg+COSTS[index]*cum,0)*.8}
+                  config={{
+                    decimals:1,
+                    prefix:"$",
+                    suffix:"",
+                    isTimestamp:false
+                  }}
+                />
               </div>
             </div>
 
