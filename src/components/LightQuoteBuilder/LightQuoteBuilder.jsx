@@ -87,6 +87,23 @@ const LightQuoteBuilder=()=>{
     setCells(newCells)
   }
 
+  const resetCells=(curCells)=>{
+    let newCells=[...curCells];
+
+    newCells.forEach(row=>{
+      row.forEach(cell=>{
+        Object.keys(cell.layers).forEach(key=>{
+          delete cell.layers[key];
+        })
+      })
+    });
+
+    let newLayers=[0,0,0,0,0,0];
+
+    setCells(newCells);
+    setLayers(newLayers);
+  }
+
   return(
     <div className='relative flex flex-col h-full w-full items-center justify-center bg-white'>
       <div className='relative flex flex-col bg-gray-300 border-gray-200 shadow-lg rounded-xl border border-gray-200 overflow-hidden' style={{height:"40rem", width:"40rem"}}>
@@ -132,7 +149,7 @@ const LightQuoteBuilder=()=>{
                   </div>
                   {["Q1","Q2","Q3","Q4"].map((quarter,quarterIndex)=>{
                     return(
-                      <div key={quarterIndex} className='flex flex-row h-10 flex-1 items-center justify-center border-r border-l font-bold text-3xl'>
+                      <div key={quarterIndex} className='flex flex-row h-10 flex-1 items-center justify-center border-r border-l font-bold text-xl'>
                         {String(quarter)}
                       </div>
                     )
@@ -227,8 +244,13 @@ const LightQuoteBuilder=()=>{
       <div className={`absolute top-0 right-0 h-full ${showQuote?"w-1/4 border-l bg-white":"w-0 opacity-0"} transtion-all duration-300 ease-in-out`}>
         {showQuote?(
           <div className='flex flex-col h-full w-full px-2 py-4 items-center justify-start'>
-            <div className='font-bold text-3xl'>
+            <div className='relative font-bold text-3xl'>
               {String("Verkada Quote")}
+
+              {/*Clear */}
+              <button className='absolute top-0 right-0 h-4 w-4 pb-0.5 flex flex-col items-center justify-center text-xs bg-gray-300 rounded-full hover:bg-gray-600 text-gray-100' onClick={()=>resetCells(cells)} style={{transform:"translate(200%,-50%)"}}>
+                {String("x")}
+              </button>
             </div>
             <div className='flex flex-row items-center justify-center font-bold rounded-full bg-gray-800 text-white px-4 py-2'>
               {String("ABC Company")}
@@ -400,7 +422,7 @@ const LightQuoteBuilder=()=>{
             </div>
 
             {/*Save & Share Buttons*/}
-            <div className='flex flex-row items-center justify-center px-4 py-2 hover:px-12 hover:py-4 rounded-full border shadow-lg transition-all duration-500 ease-in-out'>
+            <div className='relative flex flex-row items-center justify-center px-4 py-2 hover:px-12 hover:py-4 rounded-full border shadow-lg transition-all duration-500 ease-in-out'>
               {"Save Quote"}
             </div>
           </div>
